@@ -21,15 +21,12 @@ package com.kryeit.votifier;
 import com.kryeit.votifier.config.ConfigReader;
 import com.kryeit.votifier.crypto.RSAIO;
 import com.kryeit.votifier.crypto.RSAKeygen;
-import com.kryeit.votifier.model.ListenerLoader;
 import com.kryeit.votifier.model.VoteListener;
 import com.kryeit.votifier.model.VotifierEvent;
 import com.kryeit.votifier.model.listeners.BasicVoteListener;
 import com.kryeit.votifier.net.VoteReceiver;
 import net.fabricmc.api.DedicatedServerModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents;
-import net.minecraft.world.World;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
