@@ -1,6 +1,7 @@
 package com.kryeit.votifier;
 
-import java.util.logging.*;
+import java.util.logging.Filter;
+import java.util.logging.LogRecord;
 
 /**
  * A custom log filter for prepending plugin identifier on all log messages.

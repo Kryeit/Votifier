@@ -18,6 +18,13 @@
 
 package com.kryeit.votifier.net;
 
+import com.kryeit.votifier.Votifier;
+import com.kryeit.votifier.crypto.RSA;
+import com.kryeit.votifier.model.Vote;
+import com.kryeit.votifier.model.VoteListener;
+import com.kryeit.votifier.model.VotifierEvent;
+
+import javax.crypto.BadPaddingException;
 import java.io.BufferedWriter;
 import java.io.InputStream;
 import java.io.OutputStreamWriter;
@@ -25,15 +32,8 @@ import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
-import java.util.logging.*;
-import javax.crypto.BadPaddingException;
-
-import com.kryeit.votifier.MinecraftServerSupplier;
-import org.bukkit.Bukkit;
-
-import com.kryeit.votifier.Votifier;
-import com.kryeit.votifier.crypto.RSA;
-import com.kryeit.votifier.model.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * The vote receiving server.
@@ -176,7 +176,7 @@ public class VoteReceiver extends Thread {
 
 				// Call event
 				VotifierEvent.EVENT.invoker().onVoteReceived(vote);
-				
+
 				// Clean up.
 				writer.close();
 				in.close();

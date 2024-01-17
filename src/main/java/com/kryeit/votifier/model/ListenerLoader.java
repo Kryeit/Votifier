@@ -1,9 +1,13 @@
 package com.kryeit.votifier.model;
 
 import java.io.File;
-import java.net.*;
-import java.util.*;
-import java.util.logging.*;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Loads vote listeners. Listeners that cannot be instantiated will be skipped.

@@ -18,10 +18,10 @@
 
 package com.kryeit.votifier.model.listeners;
 
-import java.util.logging.Logger;
-
 import com.kryeit.votifier.model.Vote;
 import com.kryeit.votifier.model.VoteListener;
+
+import java.util.logging.Logger;
 
 /**
  * A basic vote listener for demonstration purposes.

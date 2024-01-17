@@ -18,10 +18,9 @@
 
 package com.kryeit.votifier.crypto;
 
+import javax.crypto.Cipher;
 import java.security.PrivateKey;
 import java.security.PublicKey;
-
-import javax.crypto.Cipher;
 
 /**
  * Static RSA utility methods for encrypting and decrypting blocks of

@@ -29,8 +29,6 @@ import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.Base64;
 
-import javax.xml.bind.DatatypeConverter;
-
 /**
  * Static utility methods for saving and loading RSA key pairs.
  * 

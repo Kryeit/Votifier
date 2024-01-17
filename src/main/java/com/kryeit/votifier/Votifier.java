@@ -18,22 +18,22 @@
 
 package com.kryeit.votifier;
 
-import java.io.*;
-import java.nio.file.Path;
-import java.security.KeyPair;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.*;
-
 import com.kryeit.votifier.config.ConfigReader;
-import net.fabricmc.api.DedicatedServerModInitializer;
 import com.kryeit.votifier.crypto.RSAIO;
 import com.kryeit.votifier.crypto.RSAKeygen;
 import com.kryeit.votifier.model.ListenerLoader;
 import com.kryeit.votifier.model.VoteListener;
 import com.kryeit.votifier.net.VoteReceiver;
+import net.fabricmc.api.DedicatedServerModInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.security.KeyPair;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The main Votifier plugin class.
