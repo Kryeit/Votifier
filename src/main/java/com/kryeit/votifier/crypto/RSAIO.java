@@ -47,24 +47,25 @@ public class RSAIO {
 	 *             If an error occurs
 	 */
 	public static void save(File directory, KeyPair keyPair) throws Exception {
+		// Check if the directory exists, if not, create it
+		if (!directory.exists()) {
+			directory.mkdirs();
+		}
+
 		PrivateKey privateKey = keyPair.getPrivate();
 		PublicKey publicKey = keyPair.getPublic();
 
-		// Store the public key.
-		X509EncodedKeySpec publicSpec = new X509EncodedKeySpec(
-				publicKey.getEncoded());
-		FileOutputStream out = new FileOutputStream(directory + "/public.key");
-		out.write(Base64.getEncoder().encodeToString(publicSpec.getEncoded())
-				.getBytes());
-		out.close();
+		// Store the public key
+		X509EncodedKeySpec publicSpec = new X509EncodedKeySpec(publicKey.getEncoded());
+		try (FileOutputStream out = new FileOutputStream(new File(directory, "public.key"))) {
+			out.write(Base64.getEncoder().encodeToString(publicSpec.getEncoded()).getBytes());
+		}
 
-		// Store the private key.
-		PKCS8EncodedKeySpec privateSpec = new PKCS8EncodedKeySpec(
-				privateKey.getEncoded());
-		out = new FileOutputStream(directory + "/private.key");
-		out.write(Base64.getEncoder().encodeToString(privateSpec.getEncoded())
-				.getBytes());
-		out.close();
+		// Store the private key
+		PKCS8EncodedKeySpec privateSpec = new PKCS8EncodedKeySpec(privateKey.getEncoded());
+		try (FileOutputStream out = new FileOutputStream(new File(directory, "private.key"))) {
+			out.write(Base64.getEncoder().encodeToString(privateSpec.getEncoded()).getBytes());
+		}
 	}
 
 	/**
