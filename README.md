@@ -2,7 +2,7 @@
   <img width="200" src="https://github.com/Kryeit/Votifier/blob/master/src/main/resources/assets/votifier/icon.png">
 </p>
 
-<h1 align="center">Votifier<br>
+<h1 align="center">Votifier for Fabric<br>
 	<a href="https://legacy.curseforge.com/minecraft/mc-mods/fabricvotifier/files"><img src="https://cf.way2muchnoise.eu/versions/fabricvotifier.svg" alt="Supported Versions"></a>
 	<a href="https://github.com/Kryeit/Votifier/LICENSE"><img src="https://img.shields.io/github/license/Creators-of-Create/Create?style=flat&color=900c3f" alt="License"></a>
 	<a href="https://www.curseforge.com/minecraft/mc-mods/fabricvotifier"><img src="http://cf.way2muchnoise.eu/fabricvotifier.svg" alt="CF"></a>
@@ -10,7 +10,6 @@
     <br><br>
 </h1>
 
-# Votifier for Fabric
 It's a really simple mod:
 - Creates public & private keys inside `/mods/votifier/` folder
 - Creates a votifier.json inside `/config/votifier/` folder
