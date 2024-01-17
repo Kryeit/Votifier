@@ -19,20 +19,21 @@
 package com.kryeit.votifier;
 
 import java.io.*;
+import java.nio.file.Path;
 import java.security.KeyPair;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.*;
 
+import com.kryeit.votifier.config.ConfigReader;
 import net.fabricmc.api.DedicatedServerModInitializer;
-import org.bukkit.Bukkit;
-import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.plugin.java.JavaPlugin;
 import com.kryeit.votifier.crypto.RSAIO;
 import com.kryeit.votifier.crypto.RSAKeygen;
 import com.kryeit.votifier.model.ListenerLoader;
 import com.kryeit.votifier.model.VoteListener;
 import com.kryeit.votifier.net.VoteReceiver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The main Votifier plugin class.
@@ -43,7 +44,7 @@ import com.kryeit.votifier.net.VoteReceiver;
 public class Votifier implements DedicatedServerModInitializer {
 
 	/** The logger instance. */
-	private static final Logger LOG = Logger.getLogger("Votifier");
+	public static final Logger LOGGER = LoggerFactory.getLogger(Votifier.class);
 
 	/** Log entry prefix */
 	private static final String logPrefix = "[Votifier] ";
@@ -66,30 +67,23 @@ public class Votifier implements DedicatedServerModInitializer {
 	/** Debug mode flag */
 	private boolean debug;
 
-	/**
-	 * Attach custom log filter to logger.
-	 */
-	static {
-		LOG.setFilter(new LogFilter(logPrefix));
-	}
-
 	@Override
 	public void onInitializeServer() {
 		Votifier.instance = this;
 
 		// Set the plugin version.
-		version = getDescription().getVersion();
+		version = "1.0";
 
 		// Handle configuration.
-		if (!getDataFolder().exists()) {
-			getDataFolder().mkdir();
+		try {
+			LOGGER.info("Reading config file...");
+			ConfigReader.readFile(Path.of("config/votifier"));
+		} catch (IOException e) {
+			throw new RuntimeException(e);
 		}
-		File config = new File(getDataFolder() + "/config.yml");
-		YamlConfiguration cfg = YamlConfiguration.loadConfiguration(config);
-		File rsaDirectory = new File(getDataFolder() + "/rsa");
+		File rsaDirectory = new File("mods/votifier/rsa");
 		// Replace to remove a bug with Windows paths - SmilingDevil
-		String listenerDirectory = getDataFolder().toString()
-				.replace("\\", "/") + "/listeners";
+		String listenerDirectory = "mods/votifier/listeners";
 
 		/*
 		 * Use IP address from server.properties as a default for
@@ -100,44 +94,6 @@ public class Votifier implements DedicatedServerModInitializer {
 		String hostAddr = MinecraftServerSupplier.getServer().getServerIp();
 		if (hostAddr == null || hostAddr.length() == 0)
 			hostAddr = "0.0.0.0";
-
-		/*
-		 * Create configuration file if it does not exists; otherwise, load it
-		 */
-		if (!config.exists()) {
-			try {
-				// First time run - do some initialization.
-				LOG.info("Configuring Votifier for the first time...");
-
-				// Initialize the configuration file.
-				config.createNewFile();
-
-				cfg.set("host", hostAddr);
-				cfg.set("port", 8192);
-				cfg.set("debug", false);
-
-				/*
-				 * Remind hosted server admins to be sure they have the right
-				 * port number.
-				 */
-				LOG.info("------------------------------------------------------------------------------");
-				LOG.info("Assigning Votifier to listen on port 8192. If you are hosting Craftbukkit on a");
-				LOG.info("shared server please check with your hosting provider to verify that this port");
-				LOG.info("is available for your use. Chances are that your hosting provider will assign");
-				LOG.info("a different port, which you need to specify in config.yml");
-				LOG.info("------------------------------------------------------------------------------");
-
-				cfg.set("listener_folder", listenerDirectory);
-				cfg.save(config);
-			} catch (Exception ex) {
-				LOG.log(Level.SEVERE, "Error creating configuration file", ex);
-				gracefulExit();
-				return;
-			}
-		} else {
-			// Load configuration.
-			cfg = YamlConfiguration.loadConfiguration(config);
-		}
 
 		/*
 		 * Create RSA directory and keys if it does not exist; otherwise, read
@@ -153,28 +109,27 @@ public class Votifier implements DedicatedServerModInitializer {
 				keyPair = RSAIO.load(rsaDirectory);
 			}
 		} catch (Exception ex) {
-			LOG.log(Level.SEVERE,
-					"Error reading configuration file or RSA keys", ex);
+			LOGGER.warn("Error reading configuration file or RSA keys", ex);
 			gracefulExit();
 			return;
 		}
 
 		// Load the vote listeners.
-		listenerDirectory = cfg.getString("listener_folder");
+		listenerDirectory = ConfigReader.LISTENER_FOLDER;
 		listeners.addAll(ListenerLoader.load(listenerDirectory));
 
 		// Initialize the receiver.
-		String host = cfg.getString("host", hostAddr);
-		int port = cfg.getInt("port", 8192);
-		debug = cfg.getBoolean("debug", false);
+		String host = ConfigReader.HOST;
+		int port = ConfigReader.PORT;
+		debug = ConfigReader.DEBUG;
 		if (debug)
-			LOG.info("DEBUG mode enabled!");
+			LOGGER.info("DEBUG mode enabled!");
 
 		try {
 			voteReceiver = new VoteReceiver(this, host, port);
 			voteReceiver.start();
 
-			LOG.info("Votifier enabled.");
+			LOGGER.info("Votifier enabled.");
 		} catch (Exception ex) {
 			gracefulExit();
 			return;
@@ -188,11 +143,11 @@ public class Votifier implements DedicatedServerModInitializer {
 		if (voteReceiver != null) {
 			voteReceiver.shutdown();
 		}
-		LOG.info("Votifier disabled.");
+		LOGGER.info("Votifier disabled.");
 	}
 
 	private void gracefulExit() {
-		LOG.log(Level.SEVERE, "Votifier did not initialize properly!");
+		LOGGER.warn("Votifier did not initialize properly!");
 	}
 
 	/**
