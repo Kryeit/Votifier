@@ -1,6 +1,7 @@
 package com.kryeit.votifier.model;
 
-import org.bukkit.event.*;
+import net.fabricmc.fabric.api.event.Event;
+import net.fabricmc.fabric.api.event.EventFactory;
 
 /**
  * {@code VotifierEvent} is a custom Bukkit event class that is sent
@@ -10,42 +11,14 @@ import org.bukkit.event.*;
  * @author frelling
  * 
  */
-public class VotifierEvent extends Event {
-	/**
-	 * Event listener handler list.
-	 */
-	private static final HandlerList handlers = new HandlerList();
+public interface VotifierEvent {
+	// Event instance
+	Event<VotifierEvent> EVENT = EventFactory.createArrayBacked(VotifierEvent.class, (listeners) -> (vote) -> {
+		for (VotifierEvent listener : listeners) {
+			listener.onVoteReceived(vote);
+		}
+	});
 
-	/**
-	 * Encapsulated vote record.
-	 */
-	private Vote vote;
-
-	/**
-	 * Constructs a vote event that encapsulated the given vote record.
-	 * 
-	 * @param vote
-	 *            vote record
-	 */
-	public VotifierEvent(final Vote vote) {
-		this.vote = vote;
-	}
-
-	/**
-	 * Return the encapsulated vote record.
-	 * 
-	 * @return vote record
-	 */
-	public Vote getVote() {
-		return vote;
-	}
-
-	@Override
-	public HandlerList getHandlers() {
-		return handlers;
-	}
-
-	public static HandlerList getHandlerList() {
-		return handlers;
-	}
+	// Method called when a vote is received
+	void onVoteReceived(Vote vote);
 }
