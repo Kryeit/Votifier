@@ -21,7 +21,7 @@ public class ConfigReader {
     }
 
     public static void readFile(Path path) throws IOException {
-        String config = readOrCopyFile(path.resolve("config.json"), "/config.json");
+        String config = readOrCopyFile(path.resolve("votifier.json"), "/votifier.json");
         JSONObject configObject = new JSONObject(config);
         HOST = configObject.getString("host");
         PORT = Integer.parseInt(configObject.getString("port"));

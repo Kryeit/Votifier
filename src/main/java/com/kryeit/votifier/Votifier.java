@@ -23,8 +23,13 @@ import com.kryeit.votifier.crypto.RSAIO;
 import com.kryeit.votifier.crypto.RSAKeygen;
 import com.kryeit.votifier.model.ListenerLoader;
 import com.kryeit.votifier.model.VoteListener;
+import com.kryeit.votifier.model.VotifierEvent;
+import com.kryeit.votifier.model.listeners.BasicVoteListener;
 import com.kryeit.votifier.net.VoteReceiver;
 import net.fabricmc.api.DedicatedServerModInitializer;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents;
+import net.minecraft.world.World;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -125,15 +130,18 @@ public class Votifier implements DedicatedServerModInitializer {
 			return;
 		}
 
+		VotifierEvent.EVENT.register(new BasicVoteListener());
 		registerDisableEvent();
 	}
 
 	public void registerDisableEvent() {
-		// Interrupt the vote receiver.
-		if (voteReceiver != null) {
-			voteReceiver.shutdown();
-		}
-		LOGGER.info("Votifier disabled.");
+		ServerLifecycleEvents.SERVER_STOPPING.register(server -> {
+			// Interrupt the vote receiver.
+			if (voteReceiver != null) {
+				voteReceiver.shutdown();
+			}
+			LOGGER.info("Votifier disabled.");
+		});
 	}
 
 	private void gracefulExit() {

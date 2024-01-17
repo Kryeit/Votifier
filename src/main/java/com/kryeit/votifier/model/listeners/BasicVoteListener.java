@@ -20,6 +20,7 @@ package com.kryeit.votifier.model.listeners;
 
 import com.kryeit.votifier.model.Vote;
 import com.kryeit.votifier.model.VoteListener;
+import com.kryeit.votifier.model.VotifierEvent;
 
 import java.util.logging.Logger;
 
@@ -28,13 +29,13 @@ import java.util.logging.Logger;
  * 
  * @author Blake Beaupain
  */
-public class BasicVoteListener implements VoteListener {
+public class BasicVoteListener implements VotifierEvent {
 
 	/** The logger instance. */
 	private Logger log = Logger.getLogger("BasicVoteListener");
 
-	public void voteMade(Vote vote) {
+	@Override
+	public void onVoteReceived(Vote vote) {
 		log.info("Received: " + vote);
 	}
-
 }

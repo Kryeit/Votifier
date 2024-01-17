@@ -111,7 +111,7 @@ public class VoteReceiver extends Thread {
 	public void run() {
 
 		// Main loop.
-		while (running) {
+		while (!server.isClosed() && running) {
 			try {
 				Socket socket = server.accept();
 				socket.setSoTimeout(5000); // Don't hang on slow connections.
@@ -182,8 +182,10 @@ public class VoteReceiver extends Thread {
 				in.close();
 				socket.close();
 			} catch (SocketException ex) {
-				LOG.log(Level.WARNING, "Protocol error. Ignoring packet - "
-						+ ex.getLocalizedMessage());
+				if (!server.isClosed()) {
+					LOG.log(Level.WARNING, "Protocol error. Ignoring packet - "
+							+ ex.getLocalizedMessage());
+				}
 			} catch (BadPaddingException ex) {
 				LOG.log(Level.WARNING,
 						"Unable to decrypt vote record. Make sure that that your public key");

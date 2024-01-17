@@ -21,6 +21,7 @@ package com.kryeit.votifier.crypto;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.nio.charset.StandardCharsets;
 import java.security.KeyFactory;
 import java.security.KeyPair;
 import java.security.PrivateKey;
@@ -79,33 +80,32 @@ public class RSAIO {
 	 *             If an error occurs
 	 */
 	public static KeyPair load(File directory) throws Exception {
-		// Read the public key file.
-		File publicKeyFile = new File(directory + "/public.key");
-		FileInputStream in = new FileInputStream(directory + "/public.key");
-		byte[] encodedPublicKey = new byte[(int) publicKeyFile.length()];
-		in.read(encodedPublicKey);
-		encodedPublicKey = Base64.getEncoder().encodeToString(new String(
-				encodedPublicKey).getBytes()).getBytes();
-		in.close();
+		// Read and decode the public key file.
+		File publicKeyFile = new File(directory, "public.key");
+		byte[] encodedPublicKey = readFileAsBytes(publicKeyFile);
+		encodedPublicKey = Base64.getDecoder().decode(new String(encodedPublicKey, StandardCharsets.UTF_8));
 
-		// Read the private key file.
-		File privateKeyFile = new File(directory + "/private.key");
-		in = new FileInputStream(directory + "/private.key");
-		byte[] encodedPrivateKey = new byte[(int) privateKeyFile.length()];
-		in.read(encodedPrivateKey);
-		encodedPrivateKey = Base64.getEncoder().encodeToString(new String(
-				encodedPrivateKey).getBytes()).getBytes();
-		in.close();
+		// Read and decode the private key file.
+		File privateKeyFile = new File(directory, "private.key");
+		byte[] encodedPrivateKey = readFileAsBytes(privateKeyFile);
+		encodedPrivateKey = Base64.getDecoder().decode(new String(encodedPrivateKey, StandardCharsets.UTF_8));
 
 		// Instantiate and return the key pair.
 		KeyFactory keyFactory = KeyFactory.getInstance("RSA");
-		X509EncodedKeySpec publicKeySpec = new X509EncodedKeySpec(
-				encodedPublicKey);
+		X509EncodedKeySpec publicKeySpec = new X509EncodedKeySpec(encodedPublicKey);
 		PublicKey publicKey = keyFactory.generatePublic(publicKeySpec);
-		PKCS8EncodedKeySpec privateKeySpec = new PKCS8EncodedKeySpec(
-				encodedPrivateKey);
+		PKCS8EncodedKeySpec privateKeySpec = new PKCS8EncodedKeySpec(encodedPrivateKey);
 		PrivateKey privateKey = keyFactory.generatePrivate(privateKeySpec);
+
 		return new KeyPair(publicKey, privateKey);
+	}
+
+	private static byte[] readFileAsBytes(File file) throws Exception {
+		try (FileInputStream in = new FileInputStream(file)) {
+			byte[] fileBytes = new byte[(int) file.length()];
+			in.read(fileBytes);
+			return fileBytes;
+		}
 	}
 
 }
