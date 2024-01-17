@@ -27,6 +27,7 @@ import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
+import java.util.Base64;
 
 import javax.xml.bind.DatatypeConverter;
 
@@ -55,7 +56,7 @@ public class RSAIO {
 		X509EncodedKeySpec publicSpec = new X509EncodedKeySpec(
 				publicKey.getEncoded());
 		FileOutputStream out = new FileOutputStream(directory + "/public.key");
-		out.write(DatatypeConverter.printBase64Binary(publicSpec.getEncoded())
+		out.write(Base64.getEncoder().encodeToString(publicSpec.getEncoded())
 				.getBytes());
 		out.close();
 
@@ -63,7 +64,7 @@ public class RSAIO {
 		PKCS8EncodedKeySpec privateSpec = new PKCS8EncodedKeySpec(
 				privateKey.getEncoded());
 		out = new FileOutputStream(directory + "/private.key");
-		out.write(DatatypeConverter.printBase64Binary(privateSpec.getEncoded())
+		out.write(Base64.getEncoder().encodeToString(privateSpec.getEncoded())
 				.getBytes());
 		out.close();
 	}
@@ -84,8 +85,8 @@ public class RSAIO {
 		FileInputStream in = new FileInputStream(directory + "/public.key");
 		byte[] encodedPublicKey = new byte[(int) publicKeyFile.length()];
 		in.read(encodedPublicKey);
-		encodedPublicKey = DatatypeConverter.parseBase64Binary(new String(
-				encodedPublicKey));
+		encodedPublicKey = Base64.getEncoder().encodeToString(new String(
+				encodedPublicKey).getBytes()).getBytes();
 		in.close();
 
 		// Read the private key file.
@@ -93,8 +94,8 @@ public class RSAIO {
 		in = new FileInputStream(directory + "/private.key");
 		byte[] encodedPrivateKey = new byte[(int) privateKeyFile.length()];
 		in.read(encodedPrivateKey);
-		encodedPrivateKey = DatatypeConverter.parseBase64Binary(new String(
-				encodedPrivateKey));
+		encodedPrivateKey = Base64.getEncoder().encodeToString(new String(
+				encodedPrivateKey).getBytes()).getBytes();
 		in.close();
 
 		// Instantiate and return the key pair.
