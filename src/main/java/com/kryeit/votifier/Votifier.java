@@ -95,7 +95,9 @@ public class Votifier implements DedicatedServerModInitializer {
 		 */
 		try {
 			if (!rsaDirectory.exists()) {
-				rsaDirectory.mkdir();
+				if (!rsaDirectory.mkdir()) {
+					throw new IOException("Failed to create RSA directory");
+				}
 				keyPair = RSAKeygen.generate(2048);
 				RSAIO.save(rsaDirectory, keyPair);
 			} else {
@@ -106,6 +108,7 @@ public class Votifier implements DedicatedServerModInitializer {
 			gracefulExit();
 			return;
 		}
+
 
 		// Initialize the receiver.
 		String host = ConfigReader.HOST;
