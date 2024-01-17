@@ -84,17 +84,7 @@ public class Votifier implements DedicatedServerModInitializer {
 		File rsaDirectory = new File("mods/votifier/rsa");
 		// Replace to remove a bug with Windows paths - SmilingDevil
 		String listenerDirectory = "mods/votifier/listeners";
-
-		/*
-		 * Use IP address from server.properties as a default for
-		 * configurations. Do not use InetAddress.getLocalHost() as it most
-		 * likely will return the main server address instead of the address
-		 * assigned to the server.
-		 */
-		String hostAddr = MinecraftServerSupplier.getServer().getServerIp();
-		if (hostAddr == null || hostAddr.length() == 0)
-			hostAddr = "0.0.0.0";
-
+		
 		/*
 		 * Create RSA directory and keys if it does not exist; otherwise, read
 		 * keys.
