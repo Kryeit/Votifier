@@ -10,6 +10,24 @@
     <br><br>
 </h1>
 
+# Votifier for Fabric
+It's a really simple mod:
+- Creates public & private keys inside `/mods/votifier/` folder
+- Creates a votifier.json inside `/config/votifier/` folder
 
-A fabric mod ported from the original Votifier plugin.
-It's gonna be as simple as possible.
+This votifier.json is:
+```json
+{
+  "host": "0.0.0.0",
+  "port": "8192",
+  "debug": false,
+  "command-after-voting": "/give %player% diamond 1"
+}
+```
+
+To set up the Votifier:
+1) Set "host" to your server IP
+2) Fill the configuration on the Voting site, adding the PUBLIC key, NOT the PRIVATE.
+3) Test with [MineStatus Votifier Tester](https://minestatus.net/tools/votifier)
+
+Leave "command-after-voting" like `"command-after-voting": ""` to not run any command.
