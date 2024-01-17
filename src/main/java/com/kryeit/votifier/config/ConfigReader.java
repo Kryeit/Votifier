@@ -14,7 +14,6 @@ public class ConfigReader {
     public static String HOST;
     public static int PORT;
     public static boolean DEBUG;
-    public static String LISTENER_FOLDER;
 
     private ConfigReader() {
 
@@ -26,7 +25,6 @@ public class ConfigReader {
         HOST = configObject.getString("host");
         PORT = Integer.parseInt(configObject.getString("port"));
         DEBUG = configObject.getBoolean("debug");
-        LISTENER_FOLDER = configObject.getString("listener-folder");
     }
 
     public static String readOrCopyFile(Path path, String exampleFile) throws IOException {

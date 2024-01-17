@@ -88,8 +88,7 @@ public class Votifier implements DedicatedServerModInitializer {
 		}
 		File rsaDirectory = new File("mods/votifier/rsa");
 		// Replace to remove a bug with Windows paths - SmilingDevil
-		String listenerDirectory = "mods/votifier/listeners";
-		
+
 		/*
 		 * Create RSA directory and keys if it does not exist; otherwise, read
 		 * keys.
@@ -97,7 +96,6 @@ public class Votifier implements DedicatedServerModInitializer {
 		try {
 			if (!rsaDirectory.exists()) {
 				rsaDirectory.mkdir();
-				new File(listenerDirectory).mkdir();
 				keyPair = RSAKeygen.generate(2048);
 				RSAIO.save(rsaDirectory, keyPair);
 			} else {
@@ -108,10 +106,6 @@ public class Votifier implements DedicatedServerModInitializer {
 			gracefulExit();
 			return;
 		}
-
-		// Load the vote listeners.
-		listenerDirectory = ConfigReader.LISTENER_FOLDER;
-		listeners.addAll(ListenerLoader.load(listenerDirectory));
 
 		// Initialize the receiver.
 		String host = ConfigReader.HOST;
