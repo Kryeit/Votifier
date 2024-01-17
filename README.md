@@ -1,3 +1,7 @@
+<p align="center">
+  <img width="200" src="https://github.com/Kryeit/Votifier/blob/master/src/main/resources/assets/votifier/icon.png">
+</p>
+
 <h1 align="center">Votifier<br>
 	<a href="https://legacy.curseforge.com/minecraft/mc-mods/fabricvotifier/files"><img src="https://cf.way2muchnoise.eu/versions/fabricvotifier.svg" alt="Supported Versions"></a>
 	<a href="https://github.com/Kryeit/Votifier/LICENSE"><img src="https://img.shields.io/github/license/Creators-of-Create/Create?style=flat&color=900c3f" alt="License"></a>
