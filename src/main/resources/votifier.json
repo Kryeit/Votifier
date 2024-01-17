@@ -1,5 +1,6 @@
 {
   "host": "0.0.0.0",
   "port": "8192",
-  "debug": false
+  "debug": false,
+  "command-after-voting": "give %player% diamond 1",
 }

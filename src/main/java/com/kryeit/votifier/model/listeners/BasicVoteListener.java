@@ -21,8 +21,11 @@ package com.kryeit.votifier.model.listeners;
 import com.kryeit.votifier.model.Vote;
 import com.kryeit.votifier.model.VoteListener;
 import com.kryeit.votifier.model.VotifierEvent;
+import com.kryeit.votifier.utils.Utils;
 
 import java.util.logging.Logger;
+
+import static com.kryeit.votifier.config.ConfigReader.COMMAND;
 
 /**
  * A basic vote listener for demonstration purposes.
@@ -37,5 +40,10 @@ public class BasicVoteListener implements VotifierEvent {
 	@Override
 	public void onVoteReceived(Vote vote) {
 		log.info("Received: " + vote);
+
+		String command = COMMAND.replace("%player%", vote.getUsername());
+
+		if (!command.equals(""))
+			Utils.executeCommandAsServer(command);
 	}
 }
