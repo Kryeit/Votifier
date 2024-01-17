@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "votifier",
+  "version": "${version}",
+  "name": "Votifier",
+  "description": "A Votifier mod for Fabric",
+  "authors": ["MuriPlz", "blakeman8192", "Kramer"],
+  "contact": {
+    "repo": "https://github.com/muriplz/votifier"
+  },
+  "license": "MIT",
+  "icon": "assets/votifier/icon.png",
+  "environment": "server",
+  "entrypoints": {
+    "server": [
+      "com.kryeit.votifier.Votifier"
+    ]
+  },
+  "mixins": [
+    "votifier.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": "*",
+    "fabric": "*",
+    "minecraft": "1.20.1"
+  }
+}

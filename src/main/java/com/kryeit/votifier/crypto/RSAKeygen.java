@@ -16,7 +16,7 @@
  * along with Votifier.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.vexsoftware.votifier.crypto;
+package com.kryeit.votifier.crypto;
 
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;

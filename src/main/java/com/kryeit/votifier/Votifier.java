@@ -16,21 +16,23 @@
  * along with Votifier.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.vexsoftware.votifier;
+package com.kryeit.votifier;
 
 import java.io.*;
 import java.security.KeyPair;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.*;
+
+import net.fabricmc.api.DedicatedServerModInitializer;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
-import com.vexsoftware.votifier.crypto.RSAIO;
-import com.vexsoftware.votifier.crypto.RSAKeygen;
-import com.vexsoftware.votifier.model.ListenerLoader;
-import com.vexsoftware.votifier.model.VoteListener;
-import com.vexsoftware.votifier.net.VoteReceiver;
+import com.kryeit.votifier.crypto.RSAIO;
+import com.kryeit.votifier.crypto.RSAKeygen;
+import com.kryeit.votifier.model.ListenerLoader;
+import com.kryeit.votifier.model.VoteListener;
+import com.kryeit.votifier.net.VoteReceiver;
 
 /**
  * The main Votifier plugin class.
@@ -38,7 +40,7 @@ import com.vexsoftware.votifier.net.VoteReceiver;
  * @author Blake Beaupain
  * @author Kramer Campbell
  */
-public class Votifier extends JavaPlugin {
+public class Votifier implements DedicatedServerModInitializer {
 
 	/** The logger instance. */
 	private static final Logger LOG = Logger.getLogger("Votifier");
@@ -72,7 +74,7 @@ public class Votifier extends JavaPlugin {
 	}
 
 	@Override
-	public void onEnable() {
+	public void onInitializeServer() {
 		Votifier.instance = this;
 
 		// Set the plugin version.
@@ -95,7 +97,7 @@ public class Votifier extends JavaPlugin {
 		 * likely will return the main server address instead of the address
 		 * assigned to the server.
 		 */
-		String hostAddr = Bukkit.getServer().getIp();
+		String hostAddr = MinecraftServerSupplier.getServer().getServerIp();
 		if (hostAddr == null || hostAddr.length() == 0)
 			hostAddr = "0.0.0.0";
 
@@ -177,10 +179,11 @@ public class Votifier extends JavaPlugin {
 			gracefulExit();
 			return;
 		}
+
+		registerDisableEvent();
 	}
 
-	@Override
-	public void onDisable() {
+	public void registerDisableEvent() {
 		// Interrupt the vote receiver.
 		if (voteReceiver != null) {
 			voteReceiver.shutdown();

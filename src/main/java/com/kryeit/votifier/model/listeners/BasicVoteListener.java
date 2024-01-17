@@ -16,21 +16,25 @@
  * along with Votifier.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.vexsoftware.votifier.model;
+package com.kryeit.votifier.model.listeners;
+
+import java.util.logging.Logger;
+
+import com.kryeit.votifier.model.Vote;
+import com.kryeit.votifier.model.VoteListener;
 
 /**
- * A listener for votes.
+ * A basic vote listener for demonstration purposes.
  * 
  * @author Blake Beaupain
  */
-public interface VoteListener {
+public class BasicVoteListener implements VoteListener {
 
-	/**
-	 * Called when a vote is made.
-	 * 
-	 * @param vote
-	 *            The vote that was made
-	 */
-	public void voteMade(Vote vote);
+	/** The logger instance. */
+	private Logger log = Logger.getLogger("BasicVoteListener");
+
+	public void voteMade(Vote vote) {
+		log.info("Received: " + vote);
+	}
 
 }

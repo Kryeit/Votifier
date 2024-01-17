@@ -1,44 +1,40 @@
-# Eclipse stuff
-/.classpath
-/.project
-/.settings
-/.checkstyle
+# gradle
 
-# netbeans
-/nbproject
+.gradle/
+build/
+out/
+classes/
 
-# we use maven!
-/build.xml
+# eclipse
 
-# maven
-/target
+*.launch
 
-# vim
-.*.sw[a-p]
+# idea
 
-# various other potential build files
-/build
-/bin
-/dist
-/manifest.mf
-
-/world
-
-# Mac filesystem dust
-*.DS_Store
-
-# intellij
+.idea/
 *.iml
 *.ipr
 *.iws
-.idea/
 
-# Fern's utils
-uploadtoserver.sh
+# vscode
 
-# Testing files:
-debug.log
+.settings/
+.vscode/
+bin/
+.classpath
+.project
 
-# Doxygen
-/docs/html
-debug.txt
+# macos
+
+*.DS_Store
+
+# fabric
+
+run/
+
+# java
+
+hs_err_*.log
+replay_*.log
+*.hprof
+*.jfr

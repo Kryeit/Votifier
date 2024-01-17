@@ -16,7 +16,7 @@
  * along with Votifier.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.vexsoftware.votifier.net;
+package com.kryeit.votifier.net;
 
 import java.io.BufferedWriter;
 import java.io.InputStream;
@@ -29,9 +29,9 @@ import java.util.logging.*;
 import javax.crypto.BadPaddingException;
 import org.bukkit.Bukkit;
 
-import com.vexsoftware.votifier.Votifier;
-import com.vexsoftware.votifier.crypto.RSA;
-import com.vexsoftware.votifier.model.*;
+import com.kryeit.votifier.Votifier;
+import com.kryeit.votifier.crypto.RSA;
+import com.kryeit.votifier.model.*;
 
 /**
  * The vote receiving server.
