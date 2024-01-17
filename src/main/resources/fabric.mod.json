@@ -6,7 +6,7 @@
   "description": "A Votifier mod for Fabric",
   "authors": ["MuriPlz", "blakeman8192", "Kramer"],
   "contact": {
-    "repo": "https://github.com/muriplz/votifier"
+    "repo": "https://github.com/Kryeit/Votifier"
   },
   "license": "MIT",
   "icon": "assets/votifier/icon.png",
