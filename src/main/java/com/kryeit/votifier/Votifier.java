@@ -21,7 +21,6 @@ package com.kryeit.votifier;
 import com.kryeit.votifier.config.ConfigReader;
 import com.kryeit.votifier.crypto.RSAIO;
 import com.kryeit.votifier.crypto.RSAKeygen;
-import com.kryeit.votifier.model.VoteListener;
 import com.kryeit.votifier.model.VotifierEvent;
 import com.kryeit.votifier.model.listeners.BasicVoteListener;
 import com.kryeit.votifier.net.VoteReceiver;
@@ -34,8 +33,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.security.KeyPair;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * The main Votifier plugin class.
@@ -48,17 +45,9 @@ public class Votifier implements DedicatedServerModInitializer {
 	/** The logger instance. */
 	public static final Logger LOGGER = LoggerFactory.getLogger(Votifier.class);
 
-	/** Log entry prefix */
-	private static final String logPrefix = "[Votifier] ";
 
 	/** The Votifier instance. */
 	private static Votifier instance;
-
-	/** The current Votifier version. */
-	private String version;
-
-	/** The vote listeners. */
-	private final List<VoteListener> listeners = new ArrayList<VoteListener>();
 
 	/** The vote receiver. */
 	private VoteReceiver voteReceiver;
@@ -72,9 +61,6 @@ public class Votifier implements DedicatedServerModInitializer {
 	@Override
 	public void onInitializeServer() {
 		Votifier.instance = this;
-
-		// Set the plugin version.
-		version = "1.0";
 
 		// Handle configuration.
 		try {
@@ -149,24 +135,6 @@ public class Votifier implements DedicatedServerModInitializer {
 	 */
 	public static Votifier getInstance() {
 		return instance;
-	}
-
-	/**
-	 * Gets the version.
-	 * 
-	 * @return The version
-	 */
-	public String getVersion() {
-		return version;
-	}
-
-	/**
-	 * Gets the listeners.
-	 * 
-	 * @return The listeners
-	 */
-	public List<VoteListener> getListeners() {
-		return listeners;
 	}
 
 	/**
