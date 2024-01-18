@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="200" src="https://github.com/Kryeit/Votifier/blob/master/src/main/resources/assets/votifier/icon.png">
+  <img width="200" src="https://github.com/Kryeit/Votifier/blob/1.20.4/src/main/resources/assets/votifier/icon.png">
 </p>
 
 <h1 align="center">Votifier for Fabric<br>
