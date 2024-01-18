@@ -21,7 +21,6 @@ package com.kryeit.votifier.net;
 import com.kryeit.votifier.Votifier;
 import com.kryeit.votifier.crypto.RSA;
 import com.kryeit.votifier.model.Vote;
-import com.kryeit.votifier.model.VoteListener;
 import com.kryeit.votifier.model.VotifierEvent;
 
 import javax.crypto.BadPaddingException;
@@ -120,7 +119,7 @@ public class VoteReceiver extends Thread {
 				InputStream in = socket.getInputStream();
 
 				// Send them our version.
-				writer.write("VOTIFIER " + Votifier.getInstance().getVersion());
+				writer.write("VOTIFIER");
 				writer.newLine();
 				writer.flush();
 
@@ -160,19 +159,6 @@ public class VoteReceiver extends Thread {
 
 				if (plugin.isDebug())
 					LOG.info("Received vote record -> " + vote);
-
-				// Dispatch the vote to all listeners.
-				for (VoteListener listener : Votifier.getInstance()
-						.getListeners()) {
-					try {
-						listener.voteMade(vote);
-					} catch (Exception ex) {
-						String vlName = listener.getClass().getSimpleName();
-						LOG.log(Level.WARNING,
-								"Exception caught while sending the vote notification to the '"
-										+ vlName + "' listener", ex);
-					}
-				}
 
 				// Call event
 				VotifierEvent.EVENT.invoker().onVoteReceived(vote);
