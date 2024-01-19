@@ -3,5 +3,5 @@
   "port": "8192",
   "debug": false,
   "command-after-voting": "/give %player% diamond 1",
-  "voting-link": "https://minecraft.net/?vote=true"
+  "voting-link": "https://minecraft.net/?vote=true?user=%player%"
 }

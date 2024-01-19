@@ -9,6 +9,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.ClickEvent;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
+import xyz.nucleoid.server.translations.api.Localization;
 
 import java.util.function.Supplier;
 
@@ -25,8 +26,8 @@ public class Vote {
             return 0;
         }
 
-        String link = LINK;
-        player.sendMessage(Text.literal("Voting site -> " + link)
+        String link = LINK.replace("%player%", player.getName().getString());
+        player.sendMessage(Text.literal(Localization.raw("votifier.voting_site", player) + " -> " + link)
                 .setStyle(Style.EMPTY.withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, link))));
         return Command.SINGLE_SUCCESS;
     }
