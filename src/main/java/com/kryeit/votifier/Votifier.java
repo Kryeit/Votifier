@@ -47,7 +47,6 @@ public class Votifier implements DedicatedServerModInitializer {
 	/** The logger instance. */
 	public static final Logger LOGGER = LoggerFactory.getLogger(Votifier.class);
 
-
 	/** The Votifier instance. */
 	private static Votifier instance;
 
