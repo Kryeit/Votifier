@@ -20,7 +20,8 @@ This votifier.json is:
   "host": "0.0.0.0",
   "port": "8192",
   "debug": false,
-  "command-after-voting": "/give %player% diamond 1"
+  "command-after-voting": "/give %player% diamond 1",
+  "voting-link": "https://minecraft.net/?vote=true"
 }
 ```
 
