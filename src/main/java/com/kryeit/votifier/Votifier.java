@@ -60,7 +60,7 @@ public class Votifier implements DedicatedServerModInitializer {
 	private boolean debug;
 
 	public static final String VERSION = "1.1";
-	
+
 	@Override
 	public void onInitializeServer() {
 		Votifier.instance = this;
@@ -73,7 +73,6 @@ public class Votifier implements DedicatedServerModInitializer {
 			throw new RuntimeException(e);
 		}
 		File rsaDirectory = new File("mods/votifier/rsa");
-		// Replace to remove a bug with Windows paths - SmilingDevil
 
 		/*
 		 * Create RSA directory and keys if it does not exist; otherwise, read
@@ -94,7 +93,6 @@ public class Votifier implements DedicatedServerModInitializer {
 			gracefulExit();
 			return;
 		}
-
 
 		// Initialize the receiver.
 		String host = ConfigReader.HOST;
