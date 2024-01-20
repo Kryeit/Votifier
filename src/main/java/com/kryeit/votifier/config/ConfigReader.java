@@ -15,6 +15,7 @@ public class ConfigReader {
     public static int PORT;
     public static boolean DEBUG;
     public static String COMMAND;
+    public static String LINK;
 
     private ConfigReader() {
 
@@ -27,6 +28,7 @@ public class ConfigReader {
         PORT = Integer.parseInt(configObject.getString("port"));
         DEBUG = configObject.getBoolean("debug");
         COMMAND = configObject.getString("command-after-voting");
+        LINK = configObject.getString("voting-link");
     }
 
     public static String readOrCopyFile(Path path, String exampleFile) throws IOException {

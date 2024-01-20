@@ -18,6 +18,7 @@
 
 package com.kryeit.votifier;
 
+import com.kryeit.votifier.command.Vote;
 import com.kryeit.votifier.config.ConfigReader;
 import com.kryeit.votifier.crypto.RSAIO;
 import com.kryeit.votifier.crypto.RSAKeygen;
@@ -25,6 +26,7 @@ import com.kryeit.votifier.model.VotifierEvent;
 import com.kryeit.votifier.model.listeners.BasicVoteListener;
 import com.kryeit.votifier.net.VoteReceiver;
 import net.fabricmc.api.DedicatedServerModInitializer;
+import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,7 +47,6 @@ public class Votifier implements DedicatedServerModInitializer {
 	/** The logger instance. */
 	public static final Logger LOGGER = LoggerFactory.getLogger(Votifier.class);
 
-
 	/** The Votifier instance. */
 	private static Votifier instance;
 
@@ -57,6 +58,8 @@ public class Votifier implements DedicatedServerModInitializer {
 
 	/** Debug mode flag */
 	private boolean debug;
+
+	public static final String VERSION = "1.1";
 
 	@Override
 	public void onInitializeServer() {
@@ -70,7 +73,6 @@ public class Votifier implements DedicatedServerModInitializer {
 			throw new RuntimeException(e);
 		}
 		File rsaDirectory = new File("mods/votifier/rsa");
-		// Replace to remove a bug with Windows paths - SmilingDevil
 
 		/*
 		 * Create RSA directory and keys if it does not exist; otherwise, read
@@ -92,7 +94,6 @@ public class Votifier implements DedicatedServerModInitializer {
 			return;
 		}
 
-
 		// Initialize the receiver.
 		String host = ConfigReader.HOST;
 		int port = ConfigReader.PORT;
@@ -112,6 +113,7 @@ public class Votifier implements DedicatedServerModInitializer {
 
 		VotifierEvent.EVENT.register(new BasicVoteListener());
 		registerDisableEvent();
+		registerCommands();
 	}
 
 	public void registerDisableEvent() {
@@ -121,6 +123,12 @@ public class Votifier implements DedicatedServerModInitializer {
 				voteReceiver.shutdown();
 			}
 			LOGGER.info("Votifier disabled.");
+		});
+	}
+
+	public void registerCommands() {
+		CommandRegistrationCallback.EVENT.register((dispatcher, dedicatedServer, commandFunction) -> {
+			Vote.register(dispatcher);
 		});
 	}
 

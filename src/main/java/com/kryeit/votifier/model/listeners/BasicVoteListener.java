@@ -22,8 +22,7 @@ import com.kryeit.votifier.model.Vote;
 import com.kryeit.votifier.model.VotifierEvent;
 import com.kryeit.votifier.utils.Utils;
 
-import java.util.logging.Logger;
-
+import static com.kryeit.votifier.Votifier.LOGGER;
 import static com.kryeit.votifier.config.ConfigReader.COMMAND;
 
 /**
@@ -33,12 +32,9 @@ import static com.kryeit.votifier.config.ConfigReader.COMMAND;
  */
 public class BasicVoteListener implements VotifierEvent {
 
-	/** The logger instance. */
-	private Logger log = Logger.getLogger("BasicVoteListener");
-
 	@Override
 	public void onVoteReceived(Vote vote) {
-		log.info("Received: " + vote);
+		LOGGER.info("Received: " + vote);
 
 		String command = COMMAND.replace("%player%", vote.getUsername());
 
