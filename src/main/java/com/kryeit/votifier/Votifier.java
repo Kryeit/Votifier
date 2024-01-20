@@ -59,6 +59,8 @@ public class Votifier implements DedicatedServerModInitializer {
 	/** Debug mode flag */
 	private boolean debug;
 
+	public static final String VERSION = "1.1";
+	
 	@Override
 	public void onInitializeServer() {
 		Votifier.instance = this;

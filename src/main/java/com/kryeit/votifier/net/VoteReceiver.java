@@ -34,6 +34,8 @@ import java.net.SocketException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import static com.kryeit.votifier.Votifier.VERSION;
+
 /**
  * The vote receiving server.
  * 
@@ -119,7 +121,7 @@ public class VoteReceiver extends Thread {
 				InputStream in = socket.getInputStream();
 
 				// Send them our version.
-				writer.write("VOTIFIER");
+				writer.write("VOTIFIER " + VERSION);
 				writer.newLine();
 				writer.flush();
 
