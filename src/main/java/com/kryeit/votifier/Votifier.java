@@ -80,7 +80,7 @@ public class Votifier implements DedicatedServerModInitializer {
 		 */
 		try {
 			if (!rsaDirectory.exists()) {
-				if (!rsaDirectory.mkdir()) {
+				if (!rsaDirectory.mkdirs()) {
 					throw new IOException("Failed to create RSA directory");
 				}
 				keyPair = RSAKeygen.generate(2048);
