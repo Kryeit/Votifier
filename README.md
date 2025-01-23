@@ -10,6 +10,10 @@
     <br><br>
 </h1>
 
+This mod adds a link between Voting Sites (PlanetMinecraft, etc).
+
+This plugin records the votes made by players, and gives them a reward (runs a command).
+
 It's a really simple mod:
 - Creates public & private keys inside `/mods/votifier/` folder
 - Creates a votifier.json inside `/config/votifier/` folder
@@ -21,7 +25,7 @@ This votifier.json is:
   "port": "8192",
   "debug": false,
   "command-after-voting": "/give %player% diamond 1",
-  "voting-link": "https://minecraft.net/?vote=true"
+  "voting-link": "link"
 }
 ```
 
@@ -30,5 +34,3 @@ To set up the Votifier:
 2) Open your port 8192. If you are using a hosting service, you may need to open it in the control panel or open a support ticket.
 3) Fill the configuration on the Voting site, adding the PUBLIC key, NOT the PRIVATE.
 4) Test with [MineStatus Votifier Tester](https://minestatus.net/tools/votifier)
-
-Leave "command-after-voting" like `"command-after-voting": ""` to not run any command.
