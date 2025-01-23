@@ -26,8 +26,9 @@ This votifier.json is:
 ```
 
 To set up the Votifier:
-1) Set "host" to your server IP
-2) Fill the configuration on the Voting site, adding the PUBLIC key, NOT the PRIVATE.
-3) Test with [MineStatus Votifier Tester](https://minestatus.net/tools/votifier)
+1) Set "host" to your server IP, in most cases leave it as "0.0.0.0", it's the local IP.
+2) Open your port 8192. If you are using a hosting service, you may need to open it in the control panel or open a support ticket.
+3) Fill the configuration on the Voting site, adding the PUBLIC key, NOT the PRIVATE.
+4) Test with [MineStatus Votifier Tester](https://minestatus.net/tools/votifier)
 
 Leave "command-after-voting" like `"command-after-voting": ""` to not run any command.
